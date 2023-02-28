@@ -17,7 +17,20 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->rememberToken();
+
+			// Type
+			$table->boolean('is_admin')->nullable();
+			
+			// Address
+			$table->string('address_line_1')->nullable();
+			$table->string('address_line_2')->nullable();
+			$table->string('city')->nullable();
+			$table->string('state')->nullable();
+			$table->string('zip')->nullable();
+			$table->string('contact')->nullable();
+
+
+			$table->rememberToken();
             $table->timestamps();
         });
     }
