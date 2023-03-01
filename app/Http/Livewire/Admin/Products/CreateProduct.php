@@ -13,10 +13,12 @@ class CreateProduct extends ModalComponent
 	public $name;
 	public $price;
 	public $images = [];
+	public $description = '';
 
 	protected $rules = [
 		'name' => 'required',
 		'price' => 'required|numeric',
+		'description' => 'nullable',
 		'images' => 'required',
 		'images.*' => 'required|image'
 	];
@@ -27,7 +29,8 @@ class CreateProduct extends ModalComponent
 
 		$product = Product::create([
 			'name' => $this->name,
-			'price' => $this->price
+			'price' => $this->price,
+			'description' => $this->description,
 		]);
 
 		$product->upload($this->images);

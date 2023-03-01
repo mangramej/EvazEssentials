@@ -15,6 +15,7 @@ class EditProduct extends ModalComponent
 
 	public $name;
 	public $price;
+	public $description = '';
 
 	public $images = [];
 
@@ -23,6 +24,7 @@ class EditProduct extends ModalComponent
 	protected $rules = [
 		'name' => 'required',
 		'price' => 'required|numeric',
+		'description' => 'nullable',
 		'images.*' => 'image'
 	];
 
@@ -32,6 +34,7 @@ class EditProduct extends ModalComponent
 
 		$this->name = $this->product->name;
 		$this->price = $this->product->price; 
+		$this->description = $this->product->description; 
 	}
 
 	public function update()
@@ -41,6 +44,7 @@ class EditProduct extends ModalComponent
 		$this->product->update([
 				'name' => $this->name,
 				'price' => $this->price,
+				'description' => $this->description,
 			]);
 
 		$this->product->upload($this->images);

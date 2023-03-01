@@ -16,6 +16,15 @@
             <x-input-error :messages="$errors->get('price')" class="mt-2" />
         </div>
 
+        <div class="mt-4">
+            <x-input-label for="description" :value="__('Description')" />
+
+            <textarea id="description" wire:model="description" rows="10"
+                class="block mt-1 w-full rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 w-100"
+                autofocus>
+            </textarea>
+        </div>
+
 		<div class="mt-4">
             <x-input-label for="images" :value="__('Add Images')" />
             <x-text-input id="images" type="file" class="block mt-1 w-full text-slate-700 " wire:model="images" multiple />
