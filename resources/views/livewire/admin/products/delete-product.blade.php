@@ -1,5 +1,5 @@
 <div class="p-4">
-	<h1 class="font-bold text-2xl text-slate-700 uppercase">Edit Product</h1>
+	<h1 class="font-bold text-2xl text-slate-700 uppercase">Delete Product</h1>
 
 	<form method="POST" wire:submit.prevent="destroy">
 		@csrf
@@ -11,6 +11,10 @@
 		<x-primary-button class="mt-4 bg-red-700 hover:bg-red-800">
 			{{ __('Delete') }}
 		</x-primary-button>
-		
+
+		<div wire:loading wire:target="destroy">
+            <p class="text-gray-700">Loading ...</p>
+        </div>
+
 	</form>
 </div>

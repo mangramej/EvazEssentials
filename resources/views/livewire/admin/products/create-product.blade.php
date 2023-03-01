@@ -16,12 +16,47 @@
             <x-input-error :messages="$errors->get('price')" class="mt-2" />
         </div>
 
-			<x-primary-button class="mt-4">
-                {{ __('Create') }}
-            </x-primary-button>
+        <div class="mt-4">
+            <x-input-label for="images" :value="__('Images')" />
+            <x-text-input id="images" type="file" class="block mt-1 w-full text-slate-700 " wire:model="images" multiple />
+            <x-input-error :messages="$errors->get('images')" class="mt-2" />
+            @error('images.*')
+            <x-input-error messages="All file must be an image." class="mt-2" />
+            @enderror
+        </div>
 
-			<div wire:loading>
-				<span class="text-sm text-slate-500">Creating product...</span>				
-			</div>
+        <div class="mt-4">
+            @if ($images)
+            <x-input-label for="preview-images" :value="__('Preview Images to be uploaded')" />
+            
+            <div class="grid grid-flow-row grid-cols-4 gap-4 auto-rows-max mt-1">
+                @foreach ($images as $image)
+                
+                @php
+                    try {
+                        $url = $image->temporaryUrl();
+                        $previewable = true;
+                    } catch (RuntimeException $e) {
+                        $previewable = false;
+                    }   
+                @endphp
+                
+                @if($previewable)
+                <img src="{{ $url }}">
+                @endif
+
+                @endforeach
+            </div>
+
+            @endif
+        </div>
+
+        <x-primary-button class="mt-4">
+            {{ __('Create') }}
+        </x-primary-button>
+
+        <div wire:loading wire:target="store">
+            <p class="text-gray-700">Loading ...</p>
+        </div>
 	</form>
 </div>

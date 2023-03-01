@@ -3,29 +3,44 @@
 namespace App\Http\Livewire\Admin\Products;
 
 use App\Models\Product;
+use Livewire\WithFileUploads;
 use LivewireUI\Modal\ModalComponent;
 
 class CreateProduct extends ModalComponent
 {
+	use WithFileUploads;
+
 	public $name;
 	public $price;
+	public $images = [];
 
 	protected $rules = [
 		'name' => 'required',
-		'price' => 'required|numeric'
+		'price' => 'required|numeric',
+		'images' => 'required',
+		'images.*' => 'required|image'
 	];
 
 	public function store()
 	{
 		$this->validate();
 
-		Product::create([
+		$product = Product::create([
 			'name' => $this->name,
 			'price' => $this->price
 		]);
-		
+
+		$product->upload($this->images);
+
 		$this->closeModalWithEvents(['product-event']);
 	}
+
+	// public function updatedPhotos($property)
+	// {
+	// 	$this->validate([
+    //         'images.*' => 'required|image',
+    //     ]);
+	// }
 
     public function render()
     {
