@@ -1,8 +1,8 @@
 <?php
 
-use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 
-Route::middleware('auth')->group(function () {
-	Route::get('/products', ProductController::class)->name('admin.products');		
+Route::middleware(['auth', 'admin'])->group(function () {
+    Route::view('/products', 'admin.products')->name('admin.products');
+    Route::view('/categories', 'admin.categories')->name('admin.categories');
 });
