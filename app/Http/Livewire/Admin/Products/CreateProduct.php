@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Admin\Products;
 
+use App\Models\Category;
 use App\Models\Product;
 use Livewire\WithFileUploads;
 use LivewireUI\Modal\ModalComponent;
@@ -15,10 +16,13 @@ class CreateProduct extends ModalComponent
 	public $images = [];
 	public $description = '';
 
+    public $category_id;
+
 	protected $rules = [
 		'name' => 'required',
 		'price' => 'required|numeric',
 		'description' => 'nullable',
+        'category_id' => 'nullable|exists:categories,id',
 		'images' => 'required',
 		'images.*' => 'required|image'
 	];
@@ -28,9 +32,10 @@ class CreateProduct extends ModalComponent
 		$this->validate();
 
 		$product = Product::create([
-			'name' => $this->name,
-			'price' => $this->price,
-			'description' => $this->description,
+			'name'          => $this->name,
+			'price'         => $this->price,
+            'category_id'   => ($this->category_id == "") ? null : $this->category_id,
+			'description'   => $this->description,
 		]);
 
 		$product->upload($this->images);
@@ -38,15 +43,8 @@ class CreateProduct extends ModalComponent
 		$this->closeModalWithEvents(['product-event']);
 	}
 
-	// public function updatedPhotos($property)
-	// {
-	// 	$this->validate([
-    //         'images.*' => 'required|image',
-    //     ]);
-	// }
-
     public function render()
     {
-        return view('livewire.admin.products.create-product');
+        return view('livewire.admin.products.create-product', ['categories' => Category::all()]);
     }
 }

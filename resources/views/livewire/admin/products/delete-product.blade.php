@@ -3,17 +3,15 @@
 
 	<form method="POST" wire:submit.prevent="destroy">
 		@csrf
-		
+
 		<div class="py-4 text-slate-600">
 			<p>Are you sure? This will result in permanent delete.</p>
-		</div>		
+		</div>
 
-		<x-primary-button class="mt-4 bg-red-700 hover:bg-red-800" wire:loading.remove>
-			<span>{{ __('Delete') }}</span>
-		</x-primary-button>
+        <x-primary-button class="mt-4 mt-4 bg-red-700 hover:bg-red-800" wire:loading.attr="disabled">
+			<span wire:loading.remove>{{ __('Delete') }}</span>
 
-		<x-primary-button class="mt-4 bg-red-700 hover:bg-red-800" wire:loading wire:target="destroy" disabled>
-			<div class="flex items-center justify-center">
+            <div wire:loading class="flex items-center justify-center">
 				<div
 				  class="inline-block h-4 w-4 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
 				  role="status">

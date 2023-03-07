@@ -3,8 +3,8 @@
 		<table class="table-auto w-full border-collapse bg-white text-left text-sm text-gray-500">
 			<thead class="bg-gray-50">
 				<tr>
-					<td colspan="4" class="px-6 py-4 text-end">
-						<x-text-input wire:model="search" type="search" placeholder="Start typing to search..." 
+					<td colspan="5" class="px-6 py-4 text-end">
+						<x-text-input wire:model="search" type="search" placeholder="Start typing to search..."
 						/>
 					</td>
 				</tr>
@@ -12,30 +12,36 @@
 					<th scope="col" class="px-6 py-4 font-medium text-gray-900">Image</th>
 					<th scope="col" class="px-6 py-4 font-medium text-gray-900">Name</th>
 					<th scope="col" class="px-6 py-4 font-medium text-gray-900">Price</th>
+					<th scope="col" class="px-6 py-4 font-medium text-gray-900">Category</th>
 					<th scope="col" class="px-6 py-4 font-medium text-gray-900 text-end"></th>
 				</tr>
 			</thead>
-				
+
 			<tbody class="divide-y divide-gray-100 border-t border-gray-100">
 				@forelse($products as $product)
 				<tr class="hover:bg-gray-50">
 					<td class="px-6 py-4">
 						<img src="{{ asset('storage/'. $product->previewImages->path) }}" width="50" height="50">
-					</td>	
+					</td>
 
 					<td class="px-6 py-4 font-bold">
 						{{ $product->name }}
-					</td>	
-					
+					</td>
+
 					<td class="px-6 py-4">
 						{{ $product->price }}
-					</td>	
+					</td>
+
+                    <td class="px-6 py-4">
+						{{ $product->category->name ?? 'No Category' }}
+					</td>
 
 					<td class="flex justify-end px-6 pt-7 items-center">
+
 							<button
 								class="hover:text-sky-700"
-								wire:click="$emit('openModal', 
-												'admin.products.edit-product', 
+								wire:click="$emit('openModal',
+												'admin.products.edit-product',
 												{{ json_encode(['id' => $product->id]) }}
 											)"
 							>
@@ -44,11 +50,11 @@
 									<path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
 								</svg>
 							</button>
-						
+
 							<button
 								class="ml-4 hover:text-red-700"
-								wire:click="$emit('openModal', 
-												'admin.products.delete-product', 
+								wire:click="$emit('openModal',
+												'admin.products.delete-product',
 												{{ json_encode(['id' => $product->id]) }}
 											)"
 							>
@@ -58,7 +64,7 @@
 							</button>
 
 					</td>
-				</tr>	
+				</tr>
 				@empty
 				<tr class="hover:bg-gray-50">
 					<td colspan="4" class="px-6 py-4">
@@ -68,7 +74,7 @@
 				@endforelse
 			</tbody>
 		</table>
-	</div>	
+	</div>
 
 	<div class="mt-4">
 		{{ $products->links() }}
