@@ -29,7 +29,14 @@
             @endif
 
             <!-- Page Content -->
-            <main>
+            <main class="bg-[#ECE8E7]">
+                @if (session()->has('alert'))
+                <x-alert :status="session()->get('alert')['status']" :message="session()->get('alert')['message']"
+                    class="mb-2"
+                    />
+
+                @endif
+
                 {{ $slot }}
             </main>
         </div>

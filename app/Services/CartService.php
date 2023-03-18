@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Models\Cart;
 use App\Models\Product;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class CartService
 {
@@ -40,7 +41,10 @@ class CartService
     {
         session()->forget('cart');
 
-        session()->put('cart', []);
+        Cart::where('user_id', Auth::id())
+                ->update(['data' => serialize([])]);
+
+        session(['cart' => []]);
     }
 
     static public function addItem(Product $product)
@@ -149,5 +153,24 @@ class CartService
         self::init();
 
         return session('cart');
+    }
+
+    static public function getTotal()
+    {
+        self::init();
+
+        $cart = session('cart');
+
+        if(empty($cart)) {
+            return 0;
+        }
+
+        $total = 0;
+
+        foreach($cart as $item) {
+            $total += ($item['quantity'] * $item['price']);
+        }
+
+        return $total;
     }
 }

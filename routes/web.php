@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DashboardController;
+use App\Models\Category;
 use App\Models\Product;
 use App\Services\CartService;
 use Illuminate\Support\Facades\Route;
@@ -18,8 +19,18 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
+    // $categories = Category::inRandomOrder()
+    //     ->with(['products' => function ($query) {
+    //         $query->inRandomOrder()
+    //             ->limit(5);
+    //     }, 'products.previewImages'])
+    //     ->select('id', 'name', 'path')
+    //     ->limit(4)
+    //     ->get();
 
-    return view('welcome', ['products' => Product::all()]);
+    $products = Product::with(['previewImages', 'category'])->get();
+
+    return view('welcome', compact('products'));
 })->name('welcome');
 
 Route::get('/dashboard', DashboardController::class)->middleware(['auth', 'verified'])->name('dashboard');
@@ -29,9 +40,6 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    Route::get('/checkout', function() {
-        dd('checkout page');
-    })->name('checkout');
 });
 
 Route::get('/p', function() {
