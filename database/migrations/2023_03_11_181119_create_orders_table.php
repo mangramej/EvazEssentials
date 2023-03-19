@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('payment_type');
             $table->decimal('total');
             $table->longText('detail')->nullable();
+            $table->longText('customer_detail')->nullable();
             $table->timestamps();
         });
     }

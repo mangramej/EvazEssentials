@@ -54,6 +54,14 @@ class Cart extends Component
 
         $this->validate();
 
+        if(! $user->hasAddress()) {
+            session()->flash('alert', [
+                'status' => 'warning',
+                'message' => 'Set your address first.'
+            ]);
+            return redirect()->to('/profile');
+        }
+
         OrderService::checkout($user, $cart, $this->payment_type);
 
         session()->flash('alert', [

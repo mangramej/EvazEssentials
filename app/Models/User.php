@@ -22,17 +22,16 @@ class User extends Authenticatable
         'email',
         'password',
 
-		// Type
-		'is_admin',
+        // Type
+        'is_admin',
 
-		// Address
-		'address_line_1',
-		'address_line_2',
-		'city',
-		'state',
-		'zip',
-		'contact',
-
+        // Address
+        'address_line_1',
+        'address_line_2',
+        'city',
+        'state',
+        'zip',
+        'contact',
     ];
 
     /**
@@ -40,10 +39,7 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
-    protected $hidden = [
-        'password',
-        'remember_token',
-    ];
+    protected $hidden = ['password', 'remember_token'];
 
     /**
      * The attributes that should be cast.
@@ -54,7 +50,17 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function cart() {
+    public function cart()
+    {
         return $this->hasOne(Cart::class);
+    }
+
+    public function hasAddress(): bool
+    {
+        return isset($this->address_line_1)
+            && isset($this->city)
+            && isset($this->state)
+            && isset($this->contact)
+            && isset($this->zip);
     }
 }
