@@ -16,7 +16,7 @@
 		@livewireStyles
     </head>
     <body class="font-sans antialiased">
-        <div class="min-h-screen bg-gray-100">
+        <div class="min-h-screen bg-[#ECE8E7]">
             @include('layouts.navigation')
 
             <!-- Page Heading -->
@@ -29,12 +29,11 @@
             @endif
 
             <!-- Page Content -->
-            <main class="bg-[#ECE8E7]">
+            <main>
                 @if (session()->has('alert'))
                 <x-alert :status="session()->get('alert')['status']" :message="session()->get('alert')['message']"
                     class="mb-2"
                     />
-
                 @endif
 
                 {{ $slot }}

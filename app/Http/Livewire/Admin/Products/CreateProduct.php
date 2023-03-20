@@ -33,6 +33,7 @@ class CreateProduct extends ModalComponent
 
 		$product = Product::create([
 			'name'          => $this->name,
+            'slug'          => str($this->name)->slug(),
 			'price'         => $this->price,
             'category_id'   => ($this->category_id == "") ? null : $this->category_id,
 			'description'   => $this->description,

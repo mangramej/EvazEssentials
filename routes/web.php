@@ -39,14 +39,12 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-
 });
 
-Route::get('/p', function() {
-    $products = Product::all();
-
-    return view('product', compact('products'));
-});
+Route::get('/p/{slug}', function(string $slug) {
+    $product = Product::with('images')->where('slug', '=', $slug)->firstOrFail();
+    return view('product', compact('product'));
+})->name('product.show');
 
 require __DIR__.'/auth.php';
 require __DIR__.'/admin.php';

@@ -48,6 +48,7 @@ class EditProduct extends ModalComponent
 
 		$this->product->update([
 				'name' => $this->name,
+				'slug' => str($this->name)->slug(),
 				'price' => $this->price,
 				'description' => $this->description,
                 'category_id' => ($this->category_id == "") ? null : $this->category_id,

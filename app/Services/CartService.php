@@ -96,7 +96,7 @@ class CartService
         if(in_array($id, array_column($cart, 'product-id'))) {
             $key = array_search($id, array_column($cart, 'product-id'));
 
-            if($cart[$key]['quantity'] < 1) {
+            if($cart[$key]['quantity'] <= 1) {
                 return;
             }
 
@@ -133,7 +133,7 @@ class CartService
             unset($cart[$key]);
         }
 
-        session(['cart' => $cart]);
+        session()->put('cart', $cart);
     }
 
     static public function save(User $user)

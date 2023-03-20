@@ -18,7 +18,7 @@
                             {{ $product->category?->name ?? 'No Category' }}
                         </div>
                         <div class="p-6">
-                            <a href="#!">
+                            <a href="{{ route('product.show', [$product->slug]) }}">
                                 <div class="w-[250px] h-[300px] bg-cover bg-no-repeat bg-center hover:opacity-80"
                                     style="background-image: url({{ asset('storage/' . $product->previewImages->path) }})">
 
