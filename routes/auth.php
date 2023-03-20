@@ -59,4 +59,10 @@ Route::middleware('auth')->group(function () {
 
     Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])
                 ->name('logout');
+
+    Route::get('/myorders', function() {
+        $orders = collect(auth()->user()->orders)->reverse();
+
+        return view('myorders', compact('orders'));
+    })->name('myorders');
 });
